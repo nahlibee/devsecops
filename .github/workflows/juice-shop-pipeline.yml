@@ -11,25 +11,27 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
 
+    steps:
+      # Step 1: Checkout Repository
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      # Step 2: Set up Docker
       - name: Set up Docker
         uses: docker/setup-buildx-action@v2
 
+      # Step 3: Pull Juice Shop Docker Image
       - name: Pull Juice Shop Docker Image
         run: docker pull bkimminich/juice-shop
-      - name: Deploy to Environment
+
+      # Step 4: Start the Juice Shop Container
+      - name: Start the Docker Container
         run: |
-            docker run -d --name juice-shop-container -p 3000:3000 bkimminich/juice-shop
-     
+          docker run -d --name juice-shop-container -p 3000:3000 bkimminich/juice-shop
+
       # Step 5: Run Tests inside the Docker Container
       - name: Run Tests in Container
         run: |
           docker exec juice-shop-container npm install
-          docker exec juice-shop-container npm test 
-    
-
-                
+          docker exec juice-shop-container npm test
