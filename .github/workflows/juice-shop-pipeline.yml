@@ -34,7 +34,7 @@ jobs:
         run: |
           docker run -d --name juice-shop-container -p 3000:3000 bkimminich/juice-shop
 
-       # Step: Static Application Security Testing (SAST) using CodeQL
+      # Step 5: Static Application Security Testing (SAST) using CodeQL
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v2
         with:
@@ -42,14 +42,21 @@ jobs:
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
-              # Step: Software Composition Analysis (SCA)
-                   
-      - name: Dependency Check  
-        uses: dependency-check/Dependency-Check_Action@1.1.0
-      - name: Upload Test results
-        uses: actions/upload-artifact@master
+
+      # Step 6: Software Composition Analysis (SCA) using OWASP Dependency-Check
+      - name: Run OWASP Dependency-Check
+        run: |
+          docker run --rm \
+            --volume $(pwd):/src \
+            owasp/dependency-check \
+            --project JuiceShop \
+            --scan /src \
+            --format HTML \
+            --out /src/dependency-check-report
+
+      # Step 7: Upload Dependency-Check Report
+      - name: Upload Dependency-Check Report
+        uses: actions/upload-artifact@v3
         with:
-           name: Depcheck report
-           path: workflows/reports
-
-
+          name: dependency-check-report
+          path: dependency-check-report.html
