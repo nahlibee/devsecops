@@ -44,16 +44,16 @@ jobs:
         uses: github/codeql-action/analyze@v2
 
       # Step 6: Software Composition Analysis (SCA) using OWASP Dependency-Check
-      - name: Run OWASP Dependency-Check
+        - name: Run OWASP Dependency-Check
         run: |
-         docker run --rm \
-           --volume $(pwd):/src \
-           owasp/dependency-check \
-           --project JuiceShop \
-           --scan /src \
-           --format HTML \
-           --out /src/dependency-check-report \
-           --nvd-apiKey ${{ secrets.NVD_API_KEY }}
+          docker run --rm \
+            --volume $(pwd):/src \
+            owasp/dependency-check \
+            --project JuiceShop \
+            --scan /src \
+            --format HTML \
+            --out /src/dependency-check-report \
+            --nvdApiKey ${{ secrets.NVD_API_KEY }}
          
       # Step 7: Upload Dependency-Check Report
       - name: Upload Dependency-Check Report
