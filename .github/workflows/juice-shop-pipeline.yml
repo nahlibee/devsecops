@@ -50,7 +50,7 @@ jobs:
             --volume $(pwd):/src \
             owasp/dependency-check \
             --project JuiceShop \
-            --scan /src/lib \
+            --scan /lib \
             --format HTML \
             --out /src/dependency-check-report
 
