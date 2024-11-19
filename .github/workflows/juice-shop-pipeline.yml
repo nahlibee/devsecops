@@ -21,7 +21,9 @@ jobs:
 
       - name: Pull Juice Shop Docker Image
         run: docker pull bkimminich/juice-shop
-        
+      - name: Deploy to Environment
+        run: |
+            docker run -d --name juice-shop-container -p 3000:3000 bkimminich/juice-shop
      
       # Step 5: Run Tests inside the Docker Container
       - name: Run Tests in Container
@@ -29,7 +31,5 @@ jobs:
           docker exec juice-shop-container npm install
           docker exec juice-shop-container npm test 
     
-      - name: Deploy to Environment
-        run: |
-            docker run -d --name juice-shop-container -p 3000:3000 bkimminich/juice-shop
+
                 
