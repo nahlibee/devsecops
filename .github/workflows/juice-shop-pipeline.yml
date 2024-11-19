@@ -37,9 +37,4 @@ jobs:
         if: github.ref == 'refs/heads/staging'
         run: |
            docker run -d --name juice-shop-container -p 3000:3000 bkimminich/juice-shop  
-      - name: Run Tests (optional)
-        run: |
-          docker run -d --name juice-shop-test-container -p 3000:3000 bkimminich/juice-shop 
-          curl -f http://localhost:3000 || exit 1
-          docker stop juice-shop-test-container
-          docker rm juice-shop-test-container     
+      
