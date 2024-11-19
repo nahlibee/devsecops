@@ -43,27 +43,13 @@ jobs:
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
               # Step: Software Composition Analysis (SCA)
-      - name: Install Java
-        run: sudo apt-get install -y default-jre
-
-      - name: Install OWASP Dependency-Check
-        run: |
-          curl -LO https://github.com/jeremylong/DependencyCheck/releases/download/v8.4.0/dependency-check-8.4.0-release.zip
-          unzip -q dependency-check-8.4.0-release.zip -d dependency-check
-          ls -la dependency-check # Debugging step to confirm contents
-
-      - name: Run OWASP Dependency-Check
-        run: |
-          ./dependency-check/bin/dependency-check.sh \
-          --project JuiceShop \
-          --scan . \
-          --format HTML \
-          --out dependency-check-report
-
-      - name: Upload Dependency Check Report
-        uses: actions/upload-artifact@v3
+                   
+      - name: Dependency Check  
+        uses: dependency-check/Dependency-Check_Action@1.1.0
+      - name: Upload Test results
+        uses: actions/upload-artifact@master
         with:
-          name: dependency-check-report
-          path: dependency-check-report.html
+           name: Depcheck report
+           path: workflows/reports
 
 
