@@ -1,0 +1,37 @@
+name: DevSecOps CI/CD for OWASP Juice Shop
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Step 1: Check out the repository
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    # Step 2: Pull Docker Image
+    - name: Pull OWASP Juice Shop Docker Image
+      run: docker pull bkimminich/juice-shop
+
+    # Step 3: Security Testing with Trivy
+    - name: Scan for Vulnerabilities with Trivy
+      uses: aquasecurity/trivy-action@v0.2.1
+      with:
+        image-ref: bkimminich/juice-shop
+
+    # Step 4: Deploy to Environment
+    - name: Deploy Juice Shop
+      run: |
+        docker run -d -p 3000:3000 bkimminich/juice-shop
+
+    # Step 5: Verify Deployment
+    - name: Verify Deployment
+      run: |
+        sleep 10
+        curl -I http://localhost:3000
