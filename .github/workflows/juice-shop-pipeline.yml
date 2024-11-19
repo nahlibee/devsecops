@@ -50,10 +50,10 @@ jobs:
             --volume $(pwd):/src \
             owasp/dependency-check \
             --project JuiceShop \
-            --scan /lib \
+            --scan /src \
             --format HTML \
-            --out /src/dependency-check-report
-
+            --out /src/dependency-check-report \
+            --nvd-apiKey ${{cc6edb5d-b498-4cab-8004-dd9e25fbd034}}
       # Step 7: Upload Dependency-Check Report
       - name: Upload Dependency-Check Report
         uses: actions/upload-artifact@v3
