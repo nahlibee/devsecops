@@ -48,13 +48,13 @@ jobs:
         run: |
           docker run --rm \
           --volume $(pwd):/src \
-          --volume $(pwd)/dependency-check-data:/usr/share/dependency-check/data \
+          --volume dependency-check:/usr/share/dependency-check/data \
           owasp/dependency-check \
           --project JuiceShop \
           --scan /src \
           --format HTML \
           --out /src/dependency-check-report \
-            --nvdApiKey ${{ secrets.NVD_API_KEY }}
+          --nvdApiKey ${{ secrets.NVD_API_KEY }}
          
       # Step 7: Upload Dependency-Check Report
       - name: Upload Dependency-Check Report
