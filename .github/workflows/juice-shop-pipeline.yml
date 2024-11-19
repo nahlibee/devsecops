@@ -44,7 +44,7 @@ jobs:
         uses: github/codeql-action/analyze@v2
 
       # Step 6: Software Composition Analysis (SCA) using OWASP Dependency-Check
-        - name: Run OWASP Dependency-Check
+      - name: Run OWASP Dependency-Check
         run: |
           docker run --rm \
             --volume $(pwd):/src \
